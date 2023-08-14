@@ -15,14 +15,12 @@ begin
     variable value: std_logic;
     begin
     	if(clr'event and clr = '1') then
-        	value := '0';
+        	dout <= '0';
         elsif(clk'event and clk = '1') then
         	if(in_enable = '1') then
-            	dout <= value;
-            	value := din;
+            	dout <= din;
         	elsif(in_enable = '0') then
-            	dout <= value;
-                value := '0';
+            	dout <= '0';
             end if;
         end if;
         
@@ -36,7 +34,8 @@ entity kolo is
 generic(n,m: integer);
 port(
 	clk,clr,WR: in std_logic;
-    din,dout: out std_logic_vector(m-1 downto 0);
+    din: in std_logic_vector(m-1 downto 0);
+    dout: out std_logic_vector(m-1 downto 0);
 );
 end entity kolo;
 
@@ -77,7 +76,7 @@ end generate g;
 
 end architecture k;
 
-----tb
+---tb
 
 library IEEE;
 use IEEE.std_logic_1164.all;
@@ -106,7 +105,7 @@ main: process is
 begin
 
 	sig_clr <= '1';
-    sig_wr <= '1';
+    sig_wr <= '0';
     sig_din <= "10110011";
     wait for 30ns;
     sig_clr <= '0';
