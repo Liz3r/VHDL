@@ -15,12 +15,10 @@ begin
 
 proc:process(clk) is
 variable nextVal: std_logic_vector(n-1 downto 0);
-variable check: std_logic_vector(n-1 downto 0);
 begin
 
 	
 	if(clk'event and clk = '1') then
-    	check := (others => '1');
     	if(rst = '1') then
         
         	nextVal := (others => '0');
@@ -28,7 +26,7 @@ begin
         
         elsif(rst = '0') then
         
-        	if(nextVal = check) then
+        	if(nextVal(0) = '1') then
             	
                 nextVal := (others => '0');
             	nextVal(n-1) := '1';
